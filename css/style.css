@@ -1,0 +1,28 @@
+.hidden {
+    display: none;
+}
+
+.border {
+    border: 2px solid red;
+}
+
+#products h3 {
+    text-align: center;
+}
+
+#allProducts {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.title {
+    text-align: center;
+    margin: 30px;
+    font-size: 30px;
+}
+
+#sellCard {
+    text-align: center;
+    margin: auto;
+}

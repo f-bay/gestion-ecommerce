@@ -1,14 +1,100 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Proyecto final</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <h1 class="title">Bienvenido al simulador de gestion de ecommerce!</h1>
+    <form id="form" class="container">
+      <div class="mb-3">
+        <label for="inputName" class="form-label">Nombre:</label>
+        <input type="text" name="name" class="form-control" id="inputName" />
+      </div>
+      <div class="mb-3">
+        <label for="inputDescription" class="form-label">Descripcion:</label>
+        <input
+          type="text"
+          name="description"
+          class="form-control"
+          id="inputDescription"
+        />
+      </div>
+      <label for="inputPrice" class="form-label">Precio:</label>
+      <div class="input-group mb-3">
+        <span class="input-group-text">$</span>
+        <input
+          name="price"
+          id="inputPrice"
+          type="number"
+          class="form-control"
+          aria-label="Amount (to the nearest dollar)"
+        />
+        <span class="input-group-text">.00</span>
+      </div>
+      <div class="mb-3">
+        <label for="inputStock" class="form-label">Stock:</label>
+        <input
+          type="number"
+          name="stock"
+          class="form-control"
+          id="inputStock"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="inputId" class="form-label">ID:</label>
+        <input
+          type="number"
+          name="id"
+          class="form-control"
+          id="inputId"
+        />
+      </div>
+      <button type="submit" class="btn btn-primary" id="addBtn">
+        Añadir Producto
+      </button>
+    </form>
+
+    <div class="container mt-2" id="button">
+      <button class="btn btn-primary" id="showBtn">Mostrar Productos</button>
+    </div>
+
+    <div id="products" class="hidden">
+      <h3>Listado de Productos</h3>
+      <div id="allProducts"></div>
+    </div>
     
-</head>
-<body>
-    <h1>Simulador gestion de ecommerce</h1>
-    <script src='main.js'></script>
-</body>
+    <div id="sellProducts" class="hidden">
+      <form id="sell-form" class="container">
+        <div class="mb-3">
+          <label for="sellName" class="form-label"
+            >Nombre del producto a vender:</label
+          >
+          <input type="text" name="name" class="form-control" id="sellName" />
+        </div>
+        <div class="mb-3">
+          <label for="sellAmount" class="form-label">Cantidad:</label>
+          <input
+            type="number"
+            name="amount"
+            class="form-control"
+            id="sellAmount"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary" id="sell">Vender</button>
+      </form>
+    </div>
+    <script src="./js/validations.js"></script>
+    <script src="./js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
 </html>
