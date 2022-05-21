@@ -1,15 +1,14 @@
 class Product {
-  constructor(name, description, id, price, stock) {
+  constructor(name, description, price, stock) {
     this.name = name;
     this.description = description;
-		this.id = id;
     this.price = price;
     this.stock = stock;
   }
 
-	sellProduct(amount) {
-		if(this.stock > amount) {
-			document.querySelector("#sellProducts").innerHTML += `
+  sellProduct(amount) {
+    if (this.stock > amount) {
+      document.querySelector("#sellProducts").innerHTML += `
 			<div class="card" style="width: 18rem;" id="sellCard">
   		<div class="card-body">
     	<h5 class="card-title">${this.name.toUpperCase()}</h5>
@@ -19,9 +18,9 @@ class Product {
     	<a href="./index.html" class="card-link" onclick="document.reload()">Aceptar</a>
   		</div>
 		</div>
-			`
-		} else {
-			document.querySelector("#sellProducts").innerHTML += `
+			`;
+    } else {
+      document.querySelector("#sellProducts").innerHTML += `
 			<div class="card" style="width: 18rem;" id="sellCard">
   		<div class="card-body">
     	<h5 class="card-title">${this.name.toUpperCase()}</h5>
@@ -31,9 +30,9 @@ class Product {
     	<a href="./index.html" class="card-link" onclick="document.reload()">Aceptar</a>
   		</div>
 		</div>
-			`
-		}
-	}
+			`;
+    }
+  }
 }
 
 let productsArray = [];
@@ -44,7 +43,6 @@ let $showButton = document.querySelector("#showBtn");
 
 let $name = $form.name;
 let $description = $form.description;
-let $id = $form.id;
 let $price = $form.price;
 let $stock = $form.stock;
 
@@ -58,84 +56,105 @@ let productsInStorage;
 
 $form.addEventListener("submit", (e) => {
   e.preventDefault();
-	if(validateForm()) {
-		let item = new Product($name.value, $description.value, $id.value, $price.value, $stock.value);
-		productsArray.push(item);
-		localStorage.setItem('Products', JSON.stringify(productsArray));
-		resetForm();
-	} else {
-		validateForm();
-	}
+  if (validateForm()) {
+    let item = new Product(
+      $name.value,
+      $description.value,
+      $price.value,
+      $stock.value
+    );
+    productsArray.push(item);
+    localStorage.setItem("Products", JSON.stringify(productsArray));
+    resetForm();
+    Swal.fire({
+      icon: "success",
+      title: "Muy bien!",
+      text: `Se agrego ${item.name.toUpperCase()} correctamente.`,
+    });
+  } else {
+    validateForm();
+    Swal.fire({
+      icon: "error",
+      title: "Ups...",
+      text: "No pudimos agregar el producto. Intente nuevamente.",
+    });
+  }
 });
 
-$showButton.addEventListener('click', () => {
-	productsInStorage = JSON.parse(localStorage.getItem('Products'));
-	if(productsInStorage) {
-		document.querySelector("#products").className = "";
-		$allProducts.innerHTML = "";
-  	productsInStorage.forEach(p => {
-		$allProducts.innerHTML += `
+$showButton.addEventListener("click", () => {
+  productsInStorage = JSON.parse(localStorage.getItem("Products"));
+  if (productsInStorage) {
+    document.querySelector("#products").className = "";
+    $allProducts.innerHTML = "";
+    productsInStorage.forEach((p) => {
+      $allProducts.innerHTML += `
 				<div class="card border-secondary mb-3" style="max-width: 20rem;">
 						<div class="card-header">Nombre: ${p.name}</div>
 								<div class="card-body">
 								<p class="card-text">Descripcion: ${p.description}</p>
-								<p class="card-text">ID: ${p.id}</p>
 								<p class="card-text">Precio: $${p.price}</p>
 								<p class="card-text">Stock: ${p.stock}</p>
 						</div>
 				</div>
-		`
-	})
-	} else {
-		$allProducts.innerHTML = `
+		`;
+    });
+  } else {
+    $allProducts.innerHTML = `
 		<p>No hay productos que mostrar.</p>
-		`
-	}
-	showSellForm();
+		`;
+  }
+  showSellForm();
 });
 
 let filterProduct;
 
-$sellInput.addEventListener('change', () => {
-	let search = $sellInput.value;
-	for(let i = 0; i < productsInStorage.length; i++) {
-		productsArray.push(productsInStorage[i]);
-	}
-	filterProduct = productsArray.filter(product => product.name.includes(search.toLowerCase()));
-})
+$sellInput.addEventListener("change", () => {
+  let search = $sellInput.value;
+  for (let i = 0; i < productsInStorage.length; i++) {
+    productsArray.push(productsInStorage[i]);
+  }
+  filterProduct = productsArray.filter((product) =>
+    product.name.includes(search.toLowerCase())
+  );
+});
 
-
-$sellForm.addEventListener('submit', (e) => {
-	e.preventDefault();
-	let amount = $sellAmount.value;
-	filterProduct = new Product(filterProduct[0].name, filterProduct[0].description, filterProduct[0].id, filterProduct[0].price, filterProduct[0].stock)
-	filterProduct.sellProduct(amount);
-	$sellForm.reset();
-})
-
+$sellForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  let amount = $sellAmount.value;
+  filterProduct = new Product(
+    filterProduct[0].name,
+    filterProduct[0].description,
+    filterProduct[0].price,
+    filterProduct[0].stock
+  );
+  filterProduct.sellProduct(amount);
+  $sellForm.reset();
+});
 
 function showSellForm() {
-	document.querySelector("#sellProducts").className = "";
+  document.querySelector("#sellProducts").className = "";
 }
 
 function validateForm() {
-	if(validateName() && validateDescription() && validateId() && validatePrice() && validateStock()) {
-		return true;
-	} else {
-		validateName();
-		validateDescription();
-		validateId();
-		validatePrice();
-		validateStock();
-		return false;
-	}
+  if (
+    validateName() &&
+    validateDescription() &&
+    validatePrice() &&
+    validateStock()
+  ) {
+    return true;
+  } else {
+    validateName();
+    validateDescription();
+    validatePrice();
+    validateStock();
+    return false;
+  }
 }
 
 function resetForm() {
-	$name.value = '';
-	$description.value = '';
-	$id.value = '';
-	$price.value = '';
-	$stock.value = '';
+  $name.value = "";
+  $description.value = "";
+  $price.value = "";
+  $stock.value = "";
 }
-

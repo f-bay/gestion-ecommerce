@@ -18,16 +18,6 @@ function validateDescription() {
 	}
 }
 
-function validateId() {
-	if($id.value) {
-		$id.style.border = "";
-		return true;
-	} else {
-		$id.style.border = "2px solid red";
-		return false;
-	}
-}
-
 function validatePrice() {
 	if($price.value) {
 		$price.style.border = "";
